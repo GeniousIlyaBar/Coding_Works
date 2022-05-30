@@ -1,2 +1,2 @@
 # Coding_Works
-# This repository includes my coding works and projects&
+# This repository includes my coding works and projects.

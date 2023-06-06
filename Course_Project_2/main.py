@@ -260,6 +260,7 @@ while running:
                     field.field[start_block % 20][start_block // 20] = 'snake'
                     game = 'running'
                     direction = 'none'
+                    gamer = 'none'
             if game == 'over':
                 if event.key == pygame.K_r:
                     field.restart()

@@ -65,6 +65,7 @@ sectors_entrance_exit = [[3, 80],
                          [72, 11],
                          [11, 7],
                          [7, 3]]
+
 activated_sectors_paths = [[3, 2, 1, 0, 20, 21, 22, 23, 43, 63, 62, 61, 60, 80],
                            [80, 81, 82, 83, 103, 123, 143, 142, 141, 121, 101, 100, 120, 140, 160],
                            [160, 180, 200, 201, 202, 182, 162, 163, 183, 203, 223, 222, 221, 220, 240],
@@ -193,7 +194,6 @@ def build_path(graph, snake_head, apple):
         u = queue[0]
         queue.pop(0)
         for i in range(len(graph[u])):
-
             if (visited[graph[u][i]] == False and (define_sector(graph[u][i]) == current_sector or graph[u][i] == apple)):
                 visited[graph[u][i]] = True
                 dist[graph[u][i]] = dist[u] + 1
@@ -253,6 +253,20 @@ while running:
                     fps += 5
                 elif event.key == pygame.K_s:
                     fps -= 5
+                elif event.key == pygame.K_r:
+                    field.restart()
+                    snake = []
+                    snake.append(start_block)
+                    field.field[start_block % 20][start_block // 20] = 'snake'
+                    game = 'running'
+                    direction = 'none'
+            if game == 'over':
+                if event.key == pygame.K_r:
+                    field.restart()
+                    snake = []
+                    snake.append(start_block)
+                    field.field[start_block % 20][start_block // 20] = 'snake'
+                    game = 'running'
 
     # Обновление
 

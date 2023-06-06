@@ -247,10 +247,54 @@ class Field:
                     pygame.draw.rect(screen, red, (270 + 45 * i + 3, 45 * j + 3, 39, 39))
                 elif self.field[i][j] == 'wall':
                     pygame.draw.rect(screen, black, (270 + 45 * i + 3, 45 * j + 3, 39, 39))
-        press_q_font = pygame.font.Font(None, 25)
-        press_q_text = press_q_font.render('Press Q to quit.', 1, black)
-        screen.blit(press_q_text, (40, 85))
-        if game == 'over':
+        if game != 'over':
+            press_q_font = pygame.font.Font(None, 25)
+            press_q_text = press_q_font.render('Press Q to quit.', 1, black)
+            screen.blit(press_q_text, (40, 85))
+
+            press_f_font = pygame.font.Font(None, 25)
+            press_f_text = press_f_font.render('Press F to move faster.', 1, black)
+            screen.blit(press_f_text, (40, 105))
+
+            press_s_font = pygame.font.Font(None, 25)
+            press_s_text = press_s_font.render('Press S to move faster.', 1, black)
+            screen.blit(press_s_text, (40, 125))
+
+            press_r_font = pygame.font.Font(None, 25)
+            press_r_text = press_r_font.render('Press R to restart.', 1, black)
+            screen.blit(press_r_text, (40, 145))
+        else:
             game_over_font = pygame.font.Font(None, 50)
             game_over_text = game_over_font.render('Game over', 1, red)
             screen.blit(game_over_text, (40, 50))
+
+            press_r_font = pygame.font.Font(None, 25)
+            press_r_text = press_r_font.render('Press R to restart.', 1, black)
+            screen.blit(press_r_text, (40, 85))
+
+    def restart(self):
+        for i in range(20):
+            for j in range(20):
+                self.field[i][j] = 'empty'
+        self.apple_count = 0
+        self.apple = 0
+        self.walls = 0
+        self.path_to_apple = []
+        self.path = []
+        self.graph = []
+        self.current_block_of_walls = []
+        self.sectors_status = ['disactivated' for i in range(24)]
+        for i in range(400):
+            self.graph.append([])
+            if i // 20 != 0:
+                if self.field[i // 20][i % 20] == 'empty':
+                    self.graph[-1].append(i - 20)
+            if i // 20 != 19:
+                if self.field[i // 20][i % 20] == 'empty':
+                    self.graph[-1].append(i + 20)
+            if i % 20 != 19:
+                if self.field[i // 20][i % 20] == 'empty':
+                    self.graph[-1].append(i + 1)
+            if i % 20 != 0:
+                if self.field[i // 20][i % 20] == 'empty':
+                    self.graph[-1].append(i - 1)
